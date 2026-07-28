@@ -132,19 +132,29 @@ function show(){
   if(typeof ev==="string"){try{ev=JSON.parse(ev)}catch(e){ev=[]}}
   ev=ev||[];
   var cls="b-"+String(c.verdict||"").replace(/ /g,"");
-  var rows=
-    '<div class="row"><div class="k">Verdict</div><div class="v">'+esc(c.verdict)+
-      ' <span class="muted">(confidence '+esc(c.confidence)+')</span></div></div>'+
-    '<div class="row"><div class="k">Time of death</div><div class="v">'+
+  var dead = (c.verdict==="DECEASED" || c.verdict==="ZOMBIE");
+  var rows='<div class="row"><div class="k">Verdict</div><div class="v">'+esc(c.verdict)+
+      ' <span class="muted">(confidence '+esc(c.confidence)+')</span></div></div>';
+
+  if(dead){
+    // Death fields only make sense for a corpse.
+    rows+='<div class="row"><div class="k">Time of death</div><div class="v">'+
       none(c.time_of_death,"UNKNOWN &mdash; no work evidence in this scope")+'</div></div>'+
-    '<div class="row"><div class="k">Cause of death</div><div class="v">'+
+      '<div class="row"><div class="k">Cause of death</div><div class="v">'+
       none(c.cause,"UNDETERMINED")+'</div></div>'+
-    '<div class="row"><div class="k">Survived by</div><div class="v">'+
+      '<div class="row"><div class="k">Survived by</div><div class="v">'+
       none(c.survived_by,"NONE KNOWN")+'</div></div>';
-  if(c.recommendation) rows+='<div class="row"><div class="k">Recommendation</div>'+
-    '<div class="v"><span class="rec">'+esc(c.recommendation)+'</span></div></div>';
-  if(c.alternative) rows+='<div class="row"><div class="k">Alternative</div>'+
-    '<div class="v">'+esc(c.alternative)+'</div></div>';
+    if(c.recommendation) rows+='<div class="row"><div class="k">Recommendation</div>'+
+      '<div class="v"><span class="rec">'+esc(c.recommendation)+'</span></div></div>';
+    if(c.alternative) rows+='<div class="row"><div class="k">Alternative</div>'+
+      '<div class="v">'+esc(c.alternative)+'</div></div>';
+  } else if(c.verdict==="In Progress"){
+    rows+='<div class="row"><div class="k">Basis</div><div class="v none">'+
+      'Status field only. No work evidence available in this scope.</div></div>';
+  } else {
+    rows+='<div class="row"><div class="k">Status</div><div class="v">'+
+      'Active. Recent work confirmed across connectors.</div></div>';
+  }
   rows+='<div class="row"><div class="k">Evidence</div><div class="v">'+
     esc(c.evidence_count)+' items across '+(scope==="all"?"4 connectors":"1 connector")+
     '</div></div>';

@@ -86,3 +86,14 @@ if __name__ == "__main__":
         "confidence": 0.9, "cause": "smoke test", "evidence": [], "evidence_count": 0,
     }))
     print("latest:", latest("smoke-test", "all"))
+
+
+def recent(project="", limit=20):
+    """Recent certificates, optionally for one project. Powers the memory tool."""
+    q = f"?limit={limit}&order=created_at.desc"
+    if project:
+        q += f"&project=eq.{project}"
+    r = requests.get(f"{BASE}/api/database/records/{TABLE}{q}",
+                     headers=AUTH, timeout=30)
+    r.raise_for_status()
+    return r.json()
