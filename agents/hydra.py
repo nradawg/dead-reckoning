@@ -41,12 +41,16 @@ def query(question, sources=None, database=None, limit=25):
         "type": "all",
         "query": question,
         "query_apps": True,
-        "limit": limit,
+        "max_results": limit,
+        # The Coroner wants the 40-day-old corpse, not the freshest chatter.
+        "recency_bias": 0,
     }
     if sources:
-        body["metadata_filters"] = {
-            "additional_metadata": {"provider": list(sources)}
-        }
+        # Must be `collections`, not metadata_filters: filters are exact-match
+        # and array values compare by set-equality, so a one-element list never
+        # matches a stored scalar — and unmatched filter keys fail silently,
+        # which would return everything and make the kill shot a lie.
+        body["collections"] = list(sources)
 
     r = requests.post(f"{BASE}/query", headers=HEADERS, json=body, timeout=60)
     r.raise_for_status()
