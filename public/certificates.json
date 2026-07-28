@@ -1,0 +1,668 @@
+[
+ {
+  "project": "Atlas Migration",
+  "slug": "atlas-migration",
+  "scope": "all",
+  "verdict": "DECEASED",
+  "confidence": 0.93,
+  "reason": "No human signal in 38 days; no work in 38 days.",
+  "degraded": false,
+  "days_by_source": {
+   "slack": 41,
+   "github": 38,
+   "linear": 96,
+   "gmail": 52
+  },
+  "last_seen": {
+   "slack": "2026-06-17T17:14:53Z",
+   "github": "2026-06-20T15:14:53Z",
+   "linear": "2026-04-23T20:14:53Z",
+   "gmail": "2026-06-06T15:14:53Z"
+  },
+  "evidence": [
+   {
+    "text": "",
+    "provider": "slack",
+    "timestamp": "2026-06-14T14:14:53Z",
+    "author": "Dana Cho",
+    "url": null
+   },
+   {
+    "text": "",
+    "provider": "github",
+    "timestamp": "2026-06-11T16:14:53Z",
+    "author": "Priya Raman",
+    "url": null
+   },
+   {
+    "text": "",
+    "provider": "linear",
+    "timestamp": "2026-04-23T20:14:53Z",
+    "author": "Priya Raman",
+    "url": null
+   },
+   {
+    "text": "",
+    "provider": "gmail",
+    "timestamp": "2026-05-19T16:14:53Z",
+    "author": "Marcus Webb",
+    "url": null
+   },
+   {
+    "text": "",
+    "provider": "slack",
+    "timestamp": "2026-05-23T19:14:53Z",
+    "author": "Dana Cho",
+    "url": null
+   },
+   {
+    "text": "",
+    "provider": "github",
+    "timestamp": "2026-07-19T18:14:53Z",
+    "author": "Priya Raman",
+    "url": null
+   },
+   {
+    "text": "",
+    "provider": "linear",
+    "timestamp": "2026-07-22T20:14:53Z",
+    "author": "Priya Raman",
+    "url": null
+   },
+   {
+    "text": "",
+    "provider": "gmail",
+    "timestamp": "2026-04-29T17:14:53Z",
+    "author": "Priya Raman",
+    "url": null
+   },
+   {
+    "text": "",
+    "provider": "slack",
+    "timestamp": "2026-04-25T18:14:53Z",
+    "author": "Marcus Webb",
+    "url": null
+   },
+   {
+    "text": "",
+    "provider": "github",
+    "timestamp": "2026-05-01T19:14:53Z",
+    "author": "Marcus Webb",
+    "url": null
+   },
+   {
+    "text": "",
+    "provider": "linear",
+    "timestamp": "2026-06-28T20:14:53Z",
+    "author": "Priya Raman",
+    "url": null
+   },
+   {
+    "text": "",
+    "provider": "gmail",
+    "timestamp": "2026-06-06T15:14:53Z",
+    "author": "Marcus Webb",
+    "url": null
+   }
+  ],
+  "evidence_count": 12,
+  "time_of_death": "2026-06-20T15:14:53Z",
+  "cause": "undetermined",
+  "survived_by": "unknown",
+  "recommendation": "BURY",
+  "alternative": "",
+  "eulogy": "",
+  "reasoning": "Model returned no JSON."
+ },
+ {
+  "project": "Atlas Migration",
+  "slug": "atlas-migration",
+  "scope": "linear",
+  "verdict": "In Progress",
+  "confidence": 0.71,
+  "reason": "No contradicting evidence available in this scope.",
+  "degraded": true,
+  "days_by_source": {
+   "linear": 96
+  },
+  "last_seen": {
+   "linear": "2026-04-23T20:14:53Z"
+  },
+  "evidence": [
+   {
+    "text": "",
+    "provider": "linear",
+    "timestamp": "2026-04-23T20:14:53Z",
+    "author": "Priya Raman",
+    "url": null
+   },
+   {
+    "text": "",
+    "provider": "linear",
+    "timestamp": "2026-07-22T20:14:53Z",
+    "author": "Priya Raman",
+    "url": null
+   },
+   {
+    "text": "",
+    "provider": "linear",
+    "timestamp": "2026-06-28T20:14:53Z",
+    "author": "Priya Raman",
+    "url": null
+   },
+   {
+    "text": "",
+    "provider": "linear",
+    "timestamp": "2026-05-19T20:14:53Z",
+    "author": "Priya Raman",
+    "url": null
+   }
+  ],
+  "evidence_count": 4,
+  "time_of_death": null,
+  "cause": null,
+  "survived_by": null,
+  "recommendation": null,
+  "alternative": null,
+  "eulogy": null
+ },
+ {
+  "project": "Payments V2",
+  "slug": "payments-v2",
+  "scope": "all",
+  "verdict": "ZOMBIE",
+  "confidence": 0.88,
+  "reason": "People are still talking (4d ago) but no actual work has happened in 45 days.",
+  "degraded": false,
+  "days_by_source": {
+   "slack": 4,
+   "linear": 70,
+   "github": 61,
+   "gmail": 45
+  },
+  "last_seen": {
+   "slack": "2026-07-24T15:14:53Z",
+   "linear": "2026-05-19T20:14:53Z",
+   "github": "2026-05-28T16:14:53Z",
+   "gmail": "2026-06-13T17:14:53Z"
+  },
+  "evidence": [
+   {
+    "text": "",
+    "provider": "slack",
+    "timestamp": "2026-07-17T18:14:53Z",
+    "author": "Dana Cho",
+    "url": null
+   },
+   {
+    "text": "",
+    "provider": "github",
+    "timestamp": "2026-06-11T16:14:53Z",
+    "author": "Priya Raman",
+    "url": null
+   },
+   {
+    "text": "",
+    "provider": "linear",
+    "timestamp": "2026-05-19T20:14:53Z",
+    "author": "Priya Raman",
+    "url": null
+   },
+   {
+    "text": "",
+    "provider": "gmail",
+    "timestamp": "2026-06-06T15:14:53Z",
+    "author": "Marcus Webb",
+    "url": null
+   },
+   {
+    "text": "",
+    "provider": "slack",
+    "timestamp": "2026-07-05T16:14:53Z",
+    "author": "Dana Cho",
+    "url": null
+   },
+   {
+    "text": "",
+    "provider": "github",
+    "timestamp": "2026-07-19T18:14:53Z",
+    "author": "Priya Raman",
+    "url": null
+   },
+   {
+    "text": "",
+    "provider": "linear",
+    "timestamp": "2026-07-22T20:14:53Z",
+    "author": "Priya Raman",
+    "url": null
+   },
+   {
+    "text": "",
+    "provider": "gmail",
+    "timestamp": "2026-05-25T14:14:53Z",
+    "author": "Dana Cho",
+    "url": null
+   },
+   {
+    "text": "",
+    "provider": "slack",
+    "timestamp": "2026-07-24T15:14:53Z",
+    "author": "Dana Cho",
+    "url": null
+   },
+   {
+    "text": "",
+    "provider": "github",
+    "timestamp": "2026-06-20T15:14:53Z",
+    "author": "Priya Raman",
+    "url": null
+   },
+   {
+    "text": "",
+    "provider": "linear",
+    "timestamp": "2026-04-23T20:14:53Z",
+    "author": "Priya Raman",
+    "url": null
+   },
+   {
+    "text": "",
+    "provider": "gmail",
+    "timestamp": "2026-04-29T17:14:53Z",
+    "author": "Priya Raman",
+    "url": null
+   }
+  ],
+  "evidence_count": 12,
+  "time_of_death": "2026-06-13T17:14:53Z",
+  "cause": "undetermined",
+  "survived_by": "unknown",
+  "recommendation": "BURY",
+  "alternative": "",
+  "eulogy": "",
+  "reasoning": "Model returned no JSON."
+ },
+ {
+  "project": "Payments V2",
+  "slug": "payments-v2",
+  "scope": "linear",
+  "verdict": "In Progress",
+  "confidence": 0.71,
+  "reason": "No contradicting evidence available in this scope.",
+  "degraded": true,
+  "days_by_source": {
+   "linear": 70
+  },
+  "last_seen": {
+   "linear": "2026-05-19T20:14:53Z"
+  },
+  "evidence": [
+   {
+    "text": "",
+    "provider": "linear",
+    "timestamp": "2026-05-19T20:14:53Z",
+    "author": "Priya Raman",
+    "url": null
+   },
+   {
+    "text": "",
+    "provider": "linear",
+    "timestamp": "2026-07-22T20:14:53Z",
+    "author": "Priya Raman",
+    "url": null
+   },
+   {
+    "text": "",
+    "provider": "linear",
+    "timestamp": "2026-04-23T20:14:53Z",
+    "author": "Priya Raman",
+    "url": null
+   },
+   {
+    "text": "",
+    "provider": "linear",
+    "timestamp": "2026-06-28T20:14:53Z",
+    "author": "Priya Raman",
+    "url": null
+   }
+  ],
+  "evidence_count": 4,
+  "time_of_death": null,
+  "cause": null,
+  "survived_by": null,
+  "recommendation": null,
+  "alternative": null,
+  "eulogy": null
+ },
+ {
+  "project": "Search Rewrite",
+  "slug": "search-rewrite",
+  "scope": "all",
+  "verdict": "ALIVE",
+  "confidence": 0.9,
+  "reason": "Active work 2 days ago.",
+  "degraded": false,
+  "days_by_source": {
+   "slack": 1,
+   "github": 2,
+   "linear": 30,
+   "gmail": 4
+  },
+  "last_seen": {
+   "slack": "2026-07-27T16:14:53Z",
+   "github": "2026-07-26T19:14:53Z",
+   "linear": "2026-06-28T20:14:53Z",
+   "gmail": "2026-07-24T14:14:53Z"
+  },
+  "evidence": [
+   {
+    "text": "",
+    "provider": "slack",
+    "timestamp": "2026-06-29T18:14:53Z",
+    "author": "Tomas Ruiz",
+    "url": null
+   },
+   {
+    "text": "",
+    "provider": "github",
+    "timestamp": "2026-06-11T16:14:53Z",
+    "author": "Priya Raman",
+    "url": null
+   },
+   {
+    "text": "",
+    "provider": "linear",
+    "timestamp": "2026-06-28T20:14:53Z",
+    "author": "Priya Raman",
+    "url": null
+   },
+   {
+    "text": "",
+    "provider": "gmail",
+    "timestamp": "2026-07-07T16:14:53Z",
+    "author": "Tomas Ruiz",
+    "url": null
+   },
+   {
+    "text": "",
+    "provider": "slack",
+    "timestamp": "2026-06-14T14:14:53Z",
+    "author": "Dana Cho",
+    "url": null
+   },
+   {
+    "text": "",
+    "provider": "github",
+    "timestamp": "2026-07-19T18:14:53Z",
+    "author": "Priya Raman",
+    "url": null
+   },
+   {
+    "text": "",
+    "provider": "linear",
+    "timestamp": "2026-07-22T20:14:53Z",
+    "author": "Priya Raman",
+    "url": null
+   },
+   {
+    "text": "",
+    "provider": "gmail",
+    "timestamp": "2026-07-24T14:14:53Z",
+    "author": "Tomas Ruiz",
+    "url": null
+   },
+   {
+    "text": "",
+    "provider": "slack",
+    "timestamp": "2026-05-29T19:14:53Z",
+    "author": "Tomas Ruiz",
+    "url": null
+   },
+   {
+    "text": "",
+    "provider": "github",
+    "timestamp": "2026-06-20T15:14:53Z",
+    "author": "Priya Raman",
+    "url": null
+   },
+   {
+    "text": "",
+    "provider": "linear",
+    "timestamp": "2026-04-23T20:14:53Z",
+    "author": "Priya Raman",
+    "url": null
+   },
+   {
+    "text": "",
+    "provider": "gmail",
+    "timestamp": "2026-06-06T15:14:53Z",
+    "author": "Marcus Webb",
+    "url": null
+   }
+  ],
+  "evidence_count": 12,
+  "time_of_death": null,
+  "cause": null,
+  "survived_by": null,
+  "recommendation": null,
+  "alternative": null,
+  "eulogy": null
+ },
+ {
+  "project": "Search Rewrite",
+  "slug": "search-rewrite",
+  "scope": "linear",
+  "verdict": "In Progress",
+  "confidence": 0.71,
+  "reason": "No contradicting evidence available in this scope.",
+  "degraded": true,
+  "days_by_source": {
+   "linear": 30
+  },
+  "last_seen": {
+   "linear": "2026-06-28T20:14:53Z"
+  },
+  "evidence": [
+   {
+    "text": "",
+    "provider": "linear",
+    "timestamp": "2026-06-28T20:14:53Z",
+    "author": "Priya Raman",
+    "url": null
+   },
+   {
+    "text": "",
+    "provider": "linear",
+    "timestamp": "2026-07-22T20:14:53Z",
+    "author": "Priya Raman",
+    "url": null
+   },
+   {
+    "text": "",
+    "provider": "linear",
+    "timestamp": "2026-04-23T20:14:53Z",
+    "author": "Priya Raman",
+    "url": null
+   },
+   {
+    "text": "",
+    "provider": "linear",
+    "timestamp": "2026-05-19T20:14:53Z",
+    "author": "Priya Raman",
+    "url": null
+   }
+  ],
+  "evidence_count": 4,
+  "time_of_death": null,
+  "cause": null,
+  "survived_by": null,
+  "recommendation": null,
+  "alternative": null,
+  "eulogy": null
+ },
+ {
+  "project": "Onboarding Redesign",
+  "slug": "onboarding-redesign",
+  "scope": "all",
+  "verdict": "ALIVE",
+  "confidence": 0.9,
+  "reason": "Active work 1 days ago.",
+  "degraded": false,
+  "days_by_source": {
+   "slack": 0,
+   "github": 1,
+   "linear": 6,
+   "gmail": 5
+  },
+  "last_seen": {
+   "slack": "2026-07-28T14:14:53Z",
+   "github": "2026-07-27T18:14:53Z",
+   "linear": "2026-07-22T20:14:53Z",
+   "gmail": "2026-07-23T17:14:53Z"
+  },
+  "evidence": [
+   {
+    "text": "",
+    "provider": "slack",
+    "timestamp": "2026-07-22T18:14:53Z",
+    "author": "Priya Raman",
+    "url": null
+   },
+   {
+    "text": "",
+    "provider": "github",
+    "timestamp": "2026-06-11T16:14:53Z",
+    "author": "Priya Raman",
+    "url": null
+   },
+   {
+    "text": "",
+    "provider": "linear",
+    "timestamp": "2026-07-22T20:14:53Z",
+    "author": "Priya Raman",
+    "url": null
+   },
+   {
+    "text": "",
+    "provider": "gmail",
+    "timestamp": "2026-07-23T17:14:53Z",
+    "author": "Priya Raman",
+    "url": null
+   },
+   {
+    "text": "",
+    "provider": "slack",
+    "timestamp": "2026-06-14T14:14:53Z",
+    "author": "Dana Cho",
+    "url": null
+   },
+   {
+    "text": "",
+    "provider": "github",
+    "timestamp": "2026-07-27T18:14:53Z",
+    "author": "Priya Raman",
+    "url": null
+   },
+   {
+    "text": "",
+    "provider": "linear",
+    "timestamp": "2026-04-23T20:14:53Z",
+    "author": "Priya Raman",
+    "url": null
+   },
+   {
+    "text": "",
+    "provider": "gmail",
+    "timestamp": "2026-06-06T15:14:53Z",
+    "author": "Marcus Webb",
+    "url": null
+   },
+   {
+    "text": "",
+    "provider": "slack",
+    "timestamp": "2026-05-03T16:14:53Z",
+    "author": "Dana Cho",
+    "url": null
+   },
+   {
+    "text": "",
+    "provider": "github",
+    "timestamp": "2026-07-19T18:14:53Z",
+    "author": "Priya Raman",
+    "url": null
+   },
+   {
+    "text": "",
+    "provider": "linear",
+    "timestamp": "2026-06-28T20:14:53Z",
+    "author": "Priya Raman",
+    "url": null
+   },
+   {
+    "text": "",
+    "provider": "gmail",
+    "timestamp": "2026-05-25T14:14:53Z",
+    "author": "Dana Cho",
+    "url": null
+   }
+  ],
+  "evidence_count": 12,
+  "time_of_death": null,
+  "cause": null,
+  "survived_by": null,
+  "recommendation": null,
+  "alternative": null,
+  "eulogy": null
+ },
+ {
+  "project": "Onboarding Redesign",
+  "slug": "onboarding-redesign",
+  "scope": "linear",
+  "verdict": "In Progress",
+  "confidence": 0.71,
+  "reason": "No contradicting evidence available in this scope.",
+  "degraded": true,
+  "days_by_source": {
+   "linear": 6
+  },
+  "last_seen": {
+   "linear": "2026-07-22T20:14:53Z"
+  },
+  "evidence": [
+   {
+    "text": "",
+    "provider": "linear",
+    "timestamp": "2026-07-22T20:14:53Z",
+    "author": "Priya Raman",
+    "url": null
+   },
+   {
+    "text": "",
+    "provider": "linear",
+    "timestamp": "2026-04-23T20:14:53Z",
+    "author": "Priya Raman",
+    "url": null
+   },
+   {
+    "text": "",
+    "provider": "linear",
+    "timestamp": "2026-06-28T20:14:53Z",
+    "author": "Priya Raman",
+    "url": null
+   },
+   {
+    "text": "",
+    "provider": "linear",
+    "timestamp": "2026-05-19T20:14:53Z",
+    "author": "Priya Raman",
+    "url": null
+   }
+  ],
+  "evidence_count": 4,
+  "time_of_death": null,
+  "cause": null,
+  "survived_by": null,
+  "recommendation": null,
+  "alternative": null,
+  "eulogy": null
+ }
+]

@@ -1,0 +1,44 @@
+{
+ "components": [
+  {
+   "id": "webhook_1",
+   "provider": "webhook",
+   "config": {
+    "hideForm": true,
+    "mode": "Source",
+    "parameters": {},
+    "type": "webhook"
+   }
+  },
+  {
+   "id": "coroner_llm",
+   "provider": "llm_openai",
+   "config": {
+    "apikey": "psai_6PgFjeDWYYm9GuT_OeGNELVnZDaDE52aHhCaPobpvbMjhsh2",
+    "model": "deepseek-ai/DeepSeek-V4-Flash",
+    "baseUrl": "https://api.pipeshift.com/api/v0",
+    "system": "You are the Coroner: a medical examiner for software projects. You receive an evidence dossier gathered from a company's Slack, GitHub, Linear and Gmail. Return ONLY a JSON object with keys: cause, survived_by, recommendation (REVIVE|REPLACE|BURY), reasoning, alternative, eulogy."
+   },
+   "input": [
+    {
+     "lane": "questions",
+     "from": "webhook_1"
+    }
+   ]
+  },
+  {
+   "id": "response_text_1",
+   "provider": "response_text",
+   "config": {
+    "laneName": "text"
+   },
+   "input": [
+    {
+     "lane": "text",
+     "from": "coroner_llm"
+    }
+   ]
+  }
+ ],
+ "version": 1
+}

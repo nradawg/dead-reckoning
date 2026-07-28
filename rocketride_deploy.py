@@ -30,25 +30,26 @@ SYSTEM = (
 
 # Config shapes to try, most-likely first. Pipeshift is OpenAI-compatible, so
 # an openai-style node with a base-url override is the natural fit.
+LANES = ["questions", "prompt", "input", "context"]
 CANDIDATES = [
     ("llm_openai + baseUrl", {
         "id": "coroner_llm", "provider": "llm_openai",
         "config": {"apikey": PS_KEY, "model": PS_MODEL,
                    "baseUrl": "https://api.pipeshift.com/api/v0",
                    "system": SYSTEM},
-        "input": [{"lane": "text", "from": "webhook_1"}]}),
+        "input": [{"lane": "questions", "from": "webhook_1"}]}),
     ("llm_openai + base_url", {
         "id": "coroner_llm", "provider": "llm_openai",
         "config": {"apikey": PS_KEY, "model": PS_MODEL,
                    "base_url": "https://api.pipeshift.com/api/v0",
                    "system": SYSTEM},
-        "input": [{"lane": "text", "from": "webhook_1"}]}),
+        "input": [{"lane": "questions", "from": "webhook_1"}]}),
     ("llm_openai + endpoint", {
         "id": "coroner_llm", "provider": "llm_openai",
         "config": {"apikey": PS_KEY, "model": PS_MODEL,
                    "endpoint": "https://api.pipeshift.com/api/v0",
                    "system": SYSTEM},
-        "input": [{"lane": "text", "from": "webhook_1"}]}),
+        "input": [{"lane": "questions", "from": "webhook_1"}]}),
 ]
 
 WEBHOOK = {"id": "webhook_1", "provider": "webhook",
@@ -113,12 +114,11 @@ async def main():
                  "input": [{"lane": "text", "from": "webhook_1"}]},
             ], "version": 1}
 
-        rec = await client.deploy.add(pipe, schedule="manual")
-        print("\nDEPLOYED:", json.dumps(rec, default=str)[:500], flush=True)
-        deps = await client.deploy.list()
-        print("deployments now:", json.dumps(deps, default=str)[:400], flush=True)
-        with open("rocketride_deployment.json", "w") as f:
-            json.dump({"deployment": rec, "pipeline": pipe}, f, indent=1, default=str)
+        # rrext_deploy_add is not exposed on Cloud, so persistence is via
+        # client.use(), which is what actually runs the pipeline on their runtime.
+        with open("rocketride_pipeline.json", "w") as f:
+            json.dump(pipe, f, indent=1)
+        print("\nwrote rocketride_pipeline.json", flush=True)
 
 
 asyncio.run(main())

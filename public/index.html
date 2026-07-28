@@ -63,7 +63,7 @@
 <header>
   <h1>&#9908; The Coroner</h1>
   <span class="sub">Northgate Inc &middot; a project is dead after 30 days without work
-    &middot; reading certificates from InsForge</span>
+    &middot; certificates computed by the RocketRide pipeline and stored in InsForge</span>
 </header>
 <main>
   <aside>
@@ -83,7 +83,8 @@
   </section>
 </main>
 <script>
-var BASE="https://kv6txcih.us-east.insforge.app", ANON="anon_bc6413694b3ee78714c10ba9996b6301da35fd71d976358d52871f4f5008cca0";
+// Public build reads an exported snapshot. The live InsForge-backed build
+// runs locally with credentials from .env and is never published.
 var proj=null, scope="all", CERTS={};
 function $(s){return document.querySelector(s)}
 function esc(s){return (s==null?"":String(s)).replace(/[<>&]/g,function(m){
@@ -92,8 +93,7 @@ function none(v,f){return v?esc(v):'<span class="v none">'+f+'</span>'}
 
 function loadCerts(){
   $("#status").textContent="loading…";
-  fetch(BASE+"/api/database/records/certificates?limit=200",
-        {headers:{Authorization:"Bearer "+ANON}})
+  fetch("./certificates.json")
     .then(function(r){return r.json()})
     .then(function(rows){
       CERTS={};
@@ -101,10 +101,10 @@ function loadCerts(){
         var k=row.project+"|"+row.scope;
         if(!CERTS[k]||row.created_at>CERTS[k].created_at) CERTS[k]=row;
       });
-      $("#status").textContent=Object.keys(CERTS).length+" certificates in InsForge";
+      $("#status").textContent=Object.keys(CERTS).length+" certificates (exported from InsForge)";
       if(proj) show();
     })
-    .catch(function(e){$("#status").textContent="InsForge error: "+e});
+    .catch(function(e){$("#status").textContent="load error: "+e});
 }
 
 Array.prototype.forEach.call(document.querySelectorAll(".proj"),function(el){
