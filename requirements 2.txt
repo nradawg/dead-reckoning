@@ -1,4 +1,0 @@
-python-dotenv
-requests
-openai
-# sponsor SDKs added after doc verification (hydradb / rocketride / insforge)

@@ -1,6 +1,6 @@
-# The Coroner
+# Dead Reckoning
 
-**An agent that pronounces your zombie projects dead, and tells you what to do about it.**
+**The Coroner: an agent that pronounces your zombie projects dead, and tells you what to do about it.**
 
 Built at Agents You Love 2 — Frontier Tower, San Francisco, July 28 2026.
 

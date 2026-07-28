@@ -1,0 +1,164 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Coroner — Northgate</title>
+<style>
+  :root{--bg:#0b0d10;--panel:#14171c;--line:#252a32;--ink:#e8eaed;--dim:#8b929d;
+        --dead:#e5484d;--zombie:#f5a524;--alive:#30a46c;--accent:#7c8cf8}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);
+       font:15px/1.55 ui-sans-serif,-apple-system,"Segoe UI",Roboto,sans-serif}
+  header{padding:20px 28px;border-bottom:1px solid var(--line);display:flex;
+         align-items:baseline;gap:14px;flex-wrap:wrap}
+  h1{font-size:19px;margin:0;letter-spacing:.02em}
+  .sub{color:var(--dim);font-size:13px}
+  main{display:grid;grid-template-columns:280px 1fr;min-height:calc(100vh - 62px)}
+  aside{border-right:1px solid var(--line);padding:18px}
+  .plabel{font-size:11px;text-transform:uppercase;letter-spacing:.09em;
+          color:var(--dim);margin:0 0 10px}
+  .proj{padding:11px 13px;border:1px solid var(--line);border-radius:9px;
+        margin-bottom:8px;cursor:pointer;background:var(--panel)}
+  .proj:hover{border-color:var(--accent)}
+  .proj.active{border-color:var(--accent);background:#181c26}
+  .proj b{display:block;font-weight:600}
+  .proj span{font-size:12px;color:var(--dim)}
+  section{padding:22px 28px}
+  .controls{display:flex;gap:10px;align-items:center;margin-bottom:18px;flex-wrap:wrap}
+  button{background:var(--panel);color:var(--ink);border:1px solid var(--line);
+         padding:9px 15px;border-radius:8px;cursor:pointer;font-size:14px}
+  button:hover{border-color:var(--accent)}
+  button.on{border-color:var(--dead);color:var(--dead);font-weight:700}
+  .cert{border:1px solid var(--line);border-radius:12px;background:var(--panel);
+        max-width:880px;overflow:hidden}
+  .certhead{padding:16px 20px;border-bottom:1px solid var(--line);display:flex;
+            justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+  .certtitle{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--dim)}
+  .badge{padding:7px 15px;border-radius:999px;font-weight:800;font-size:14px;
+         letter-spacing:.05em}
+  .b-DECEASED{background:rgba(229,72,77,.14);color:var(--dead);
+              border:1px solid rgba(229,72,77,.45)}
+  .b-ZOMBIE{background:rgba(245,165,36,.13);color:var(--zombie);
+            border:1px solid rgba(245,165,36,.45)}
+  .b-ALIVE,.b-InProgress{background:rgba(48,164,108,.13);color:var(--alive);
+                         border:1px solid rgba(48,164,108,.45)}
+  .rows{padding:6px 20px 16px}
+  .row{display:grid;grid-template-columns:150px 1fr;gap:14px;padding:11px 0;
+       border-bottom:1px solid #1c2027}
+  .row:last-child{border-bottom:0}
+  .k{color:var(--dim);font-size:12px;text-transform:uppercase;letter-spacing:.07em}
+  .v{font-size:15px}
+  .v.none{color:var(--dead);font-weight:700}
+  .rec{display:inline-block;padding:3px 10px;border-radius:6px;font-weight:800;
+       font-size:12px;letter-spacing:.05em;border:1px solid var(--line)}
+  .ev{margin-top:18px;max-width:880px}
+  .evitem{border:1px solid var(--line);border-radius:9px;padding:11px 13px;
+          margin-bottom:8px;background:#101319;font-size:13px}
+  .evmeta{color:var(--dim);font-size:11px;margin-bottom:5px}
+  .muted{color:var(--dim)}
+</style>
+</head>
+<body>
+<header>
+  <h1>&#9908; The Coroner</h1>
+  <span class="sub">Northgate Inc &middot; a project is dead after 30 days without work
+    &middot; reading certificates from InsForge</span>
+</header>
+<main>
+  <aside>
+    <p class="plabel">Projects &middot; all marked &ldquo;In Progress&rdquo;</p>
+    <div class="proj" data-p="Atlas Migration"><b>Atlas Migration</b><span>Linear: In Progress</span></div>
+    <div class="proj" data-p="Payments V2"><b>Payments V2</b><span>Linear: In Progress</span></div>
+    <div class="proj" data-p="Search Rewrite"><b>Search Rewrite</b><span>Linear: In Progress</span></div>
+    <div class="proj" data-p="Onboarding Redesign"><b>Onboarding Redesign</b><span>Linear: In Progress</span></div>
+  </aside>
+  <section>
+    <div class="controls">
+      <button id="scope">Sources: all four</button>
+      <button id="reload">Reload from InsForge</button>
+      <span class="muted" id="status">loading…</span>
+    </div>
+    <div id="out"><p class="muted">Select a project on the left.</p></div>
+  </section>
+</main>
+<script>
+var BASE="https://kv6txcih.us-east.insforge.app", ANON="anon_bc6413694b3ee78714c10ba9996b6301da35fd71d976358d52871f4f5008cca0";
+var proj=null, scope="all", CERTS={};
+function $(s){return document.querySelector(s)}
+function esc(s){return (s==null?"":String(s)).replace(/[<>&]/g,function(m){
+  return {"<":"&lt;",">":"&gt;","&":"&amp;"}[m]})}
+function none(v,f){return v?esc(v):'<span class="v none">'+f+'</span>'}
+
+function loadCerts(){
+  $("#status").textContent="loading…";
+  fetch(BASE+"/api/database/records/certificates?limit=200",
+        {headers:{Authorization:"Bearer "+ANON}})
+    .then(function(r){return r.json()})
+    .then(function(rows){
+      CERTS={};
+      rows.forEach(function(row){
+        var k=row.project+"|"+row.scope;
+        if(!CERTS[k]||row.created_at>CERTS[k].created_at) CERTS[k]=row;
+      });
+      $("#status").textContent=Object.keys(CERTS).length+" certificates in InsForge";
+      if(proj) show();
+    })
+    .catch(function(e){$("#status").textContent="InsForge error: "+e});
+}
+
+Array.prototype.forEach.call(document.querySelectorAll(".proj"),function(el){
+  el.onclick=function(){
+    Array.prototype.forEach.call(document.querySelectorAll(".proj"),
+      function(p){p.classList.remove("active")});
+    el.classList.add("active"); proj=el.getAttribute("data-p"); show();
+  };
+});
+
+$("#scope").onclick=function(){
+  scope = scope==="all" ? "linear" : "all";
+  this.textContent = scope==="all" ? "Sources: all four" : "Sources: LINEAR ONLY";
+  this.className = scope==="all" ? "" : "on";
+  show();
+};
+$("#reload").onclick=loadCerts;
+
+function show(){
+  if(!proj){return}
+  var c=CERTS[proj+"|"+scope];
+  if(!c){$("#out").innerHTML='<p class="muted">No certificate stored for '+
+    esc(proj)+' at scope '+scope+'.</p>'; return}
+  var ev=c.evidence;
+  if(typeof ev==="string"){try{ev=JSON.parse(ev)}catch(e){ev=[]}}
+  ev=ev||[];
+  var cls="b-"+String(c.verdict||"").replace(/ /g,"");
+  var rows=
+    '<div class="row"><div class="k">Verdict</div><div class="v">'+esc(c.verdict)+
+      ' <span class="muted">(confidence '+esc(c.confidence)+')</span></div></div>'+
+    '<div class="row"><div class="k">Time of death</div><div class="v">'+
+      none(c.time_of_death,"UNKNOWN &mdash; no work evidence in this scope")+'</div></div>'+
+    '<div class="row"><div class="k">Cause of death</div><div class="v">'+
+      none(c.cause,"UNDETERMINED")+'</div></div>'+
+    '<div class="row"><div class="k">Survived by</div><div class="v">'+
+      none(c.survived_by,"NONE KNOWN")+'</div></div>';
+  if(c.recommendation) rows+='<div class="row"><div class="k">Recommendation</div>'+
+    '<div class="v"><span class="rec">'+esc(c.recommendation)+'</span></div></div>';
+  if(c.alternative) rows+='<div class="row"><div class="k">Alternative</div>'+
+    '<div class="v">'+esc(c.alternative)+'</div></div>';
+  rows+='<div class="row"><div class="k">Evidence</div><div class="v">'+
+    esc(c.evidence_count)+' items across '+(scope==="all"?"4 connectors":"1 connector")+
+    '</div></div>';
+  var evh=ev.slice(0,6).map(function(e){
+    return '<div class="evitem"><div class="evmeta">'+esc(e.provider)+' &middot; '+
+      esc(e.timestamp)+(e.author?" &middot; "+esc(e.author):"")+'</div>'+
+      esc(e.text)+'</div>'}).join("");
+  $("#out").innerHTML='<div class="cert"><div class="certhead"><div>'+
+    '<div class="certtitle">Certificate of Death</div>'+
+    '<div style="font-size:20px;font-weight:600">'+esc(c.project)+'</div></div>'+
+    '<div class="badge '+cls+'">'+esc(c.verdict)+'</div></div>'+
+    '<div class="rows">'+rows+'</div></div><div class="ev">'+evh+'</div>';
+}
+loadCerts();
+</script>
+</body>
+</html>
