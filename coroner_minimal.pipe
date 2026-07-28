@@ -1,0 +1,13 @@
+{
+ "components": [
+  {"id": "webhook_1", "provider": "webhook",
+   "config": {"hideForm": true, "mode": "Source", "parameters": {}, "type": "webhook"},
+   "x": 100, "y": 200},
+  {"id": "response_text_1", "provider": "response_text",
+   "config": {"laneName": "text"},
+   "input": [{"lane": "text", "from": "webhook_1"}],
+   "x": 460, "y": 200}
+ ],
+ "viewport": {"x": 0, "y": 0, "zoom": 1},
+ "version": 1
+}
