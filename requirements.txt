@@ -1,5 +1,5 @@
+# Python 3.10+ required
 python-dotenv
 requests
-openai
-hydradb-sdk>=2,<3
-rocketride
+flask
+mcp

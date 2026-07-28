@@ -1,75 +1,131 @@
 # Dead Reckoning
 
-**The Coroner: an agent that pronounces your zombie projects dead, and tells you what to do about it.**
+**Find the projects your company thinks are alive but are actually dead.**
 
-Built at Agents You Love 2 — Frontier Tower, San Francisco, July 28 2026.
+Your tracker says "In Progress." Nobody has touched it in six weeks. Updating
+that status is nobody's job, so the roadmap quietly becomes fiction.
 
-## The question
+Dead Reckoning reads what your team actually *did* across Slack, GitHub, Linear
+and Gmail, and issues a death certificate when the work stopped.
 
-> "Project X says In Progress. Is it actually alive?"
+```
+DECEASED   Atlas Migration      github 74d, slack 44d, gmail 52d
+ZOMBIE     Payments V2          github 61d, slack 4d     <- talking, not working
+ALIVE      Search Rewrite       github 2d,  slack 1d
+```
 
-A status field is only as true as the last person who bothered to update it, and
-updating it is nobody's job. Linear holds the company's **claim**. Slack, GitHub,
-and Gmail hold its **behavior**. The gap between the two is where dead projects
-hide, and no single tool can see that gap.
+---
 
-## What it returns
-
-**1. The certificate.** The diagnosis: time of death, cause of death, survived by,
-every field carrying a citation from the connector it came from.
-
-**2. The verdict.** Revive, replace, or bury — with reasoning tied to the evidence.
-*"Revive: this was two review comments from done and the only blocker left the team."*
-
-**3. The alternative.** Fires only on a `replace` verdict. What already exists that
-solves what the dead project was solving, internally or off the shelf.
-
-Then you can ask it follow-up questions. Every certificate and its evidence live in
-InsForge, so "why review starvation?" or "who should own reviving this?" is a
-grounded call against stored evidence, not a fresh guess.
-
-## The kill shot
-
-Same agent, same question, scoped to Linear only.
-
-Linear's sole evidence is `status: In Progress`. Nothing contradicts it, because
-the contradiction lives in the other three systems. So the answer does not get
-vaguer — it gets **confidently wrong**. The death certificate is replaced by a
-smiling green In Progress badge.
-
-| | All sources | Linear only |
-|---|---|---|
-| Verdict | DECEASED | In Progress |
-| Evidence items | many, across 4 connectors | 1 |
-| Time of death | exact | unknown |
-| Cause | diagnosed | undetermined |
-
-Both runs are computed by the deployed pipeline and written to InsForge, so the
-on-stage toggle is a database read. Nothing is inferred live during the flip.
-
-## Who it's for
-
-Engineering leaders and founders carrying projects nobody has admitted are dead:
-headcount on abandoned work, customers waiting on features that will never ship,
-roadmaps that are partly fiction. It works identically for a solo builder with
-fifteen side projects.
-
-## Stack
-
-| Tool | Role |
-|---|---|
-| **HydraDB** | The federated evidence query across connectors. Its source-scoping parameter *is* the kill shot. |
-| **Pipeshift** | Cause-of-death classifier (structured) and the medical examiner's voice. |
-| **RocketRide Cloud** | The deployed pipeline: webhook → Investigator → Coroner → Registrar → response. |
-| **InsForge** | The morgue. Stores every certificate, evidence trail, and both scoped runs. The UI reads only from here. |
-
-## Setup
+## Quickstart
 
 ```bash
-cp .env.example .env   # paste keys
-pip install -r requirements.txt
-python smoke/test_hydradb.py
-python smoke/test_pipeshift.py
-python smoke/test_insforge.py
-python smoke/rocketride_hello.py
+git clone https://github.com/nradawg/dead-reckoning
+cd dead-reckoning
+./setup.sh
 ```
+
+Then fill in `.env` (about 10 minutes of signups, all have free tiers):
+
+| Service | What you need | Where |
+|---|---|---|
+| **HydraDB** | API key, a database, and at least one connector | [app.hydradb.com](https://app.hydradb.com) |
+| **Pipeshift** | API key and one "Serverless API" model | [dashboard.pipeshift.com](https://dashboard.pipeshift.com) |
+| **InsForge** | Base URL and keys | [insforge.dev](https://insforge.dev) |
+| RocketRide *(optional)* | Token, only for the hosted pipeline | [cloud.rocketride.ai](https://cloud.rocketride.ai) |
+
+Verify everything works before you build on it:
+
+```bash
+./.venv/bin/python check.py
+```
+
+It tells you exactly which service is misconfigured and why. Then:
+
+```bash
+./.venv/bin/python agents/discover.py
+```
+
+**Using Claude Code or Codex?** Just say *"set this up"* — `CLAUDE.md` tells your
+agent the whole procedure including the four non obvious gotchas that would
+otherwise cost it an hour.
+
+---
+
+## Connecting your own tools
+
+In the HydraDB dashboard, go to **Connectors** and add whatever you use. Slack,
+GitHub, Linear, Gmail, Notion, Asana and about 50 others.
+
+**Connect at least two, and make them different kinds.** The entire idea is
+comparing a *claim* in one tool against *behavior* in another. One tool can only
+ever tell you what it already believes.
+
+The strongest pair is an issue tracker plus a code host: the tracker holds the
+optimism, the repo holds the truth.
+
+No connectors yet and just want to see it work?
+
+```bash
+./.venv/bin/python seed/seed_corpus.py    # generates a fake company
+```
+
+---
+
+## How it works
+
+1. **Discover** — the model reads a sample of your data and names your ongoing projects. Nothing is hardcoded.
+2. **Vitals** — last real human signal per source, per project.
+3. **Verdict** — pure timestamp arithmetic. A model never decides whether something is dead, which is why this cannot hallucinate a verdict.
+4. **Diagnose** — Pipeshift writes the cause of death and whether to revive, replace, or bury it.
+
+### Four verdicts
+
+| | |
+|---|---|
+| **ALIVE** | Recent work confirmed |
+| **DECEASED** | No signal and no work past the threshold |
+| **ZOMBIE** | People still talking, nobody working. The interesting one. |
+| **In Progress** | What you get when you only ask one tool |
+
+That last row is the point. Scope the same question to your tracker alone and
+the answer does not get vaguer, it gets **confidently wrong**.
+
+---
+
+## Two ways to use it
+
+**As an agent tool (recommended).** Register the MCP server and just ask, in
+whatever agent you already use:
+
+```bash
+claude mcp add dead-reckoning -- $(pwd)/.venv/bin/python $(pwd)/mcp_server.py
+```
+
+> "Which of my projects are dead?"
+
+Tools: `list_projects`, `check_project`, `triage_all`, and `past_certificates`,
+which reads stored verdicts so the agent can tell you a project was alive in
+June and is dead now.
+
+**As a dashboard.**
+
+```bash
+./.venv/bin/python app.py     # localhost:5001
+```
+
+---
+
+## Tuning
+
+`DEAD_AFTER_DAYS` in `.env` sets the threshold. 30 is a reasonable default. A
+team shipping daily might use 14; one on quarterly cycles, 60.
+
+---
+
+## Notes
+
+Built at Agents You Love 2, Frontier Tower, San Francisco, July 2026.
+
+The verdict is deliberately deterministic. Models are used to name projects and
+explain causes, never to decide liveness, because a hallucinated verdict about
+whether your project is dead is worse than no verdict at all.
