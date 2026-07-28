@@ -1,0 +1,9 @@
+# This deploy is a static page. Keep Vercel from detecting a Python app.
+requirements.txt
+*.py
+agents/
+seed/
+smoke/
+templates/
+.venv/
+*.pipe
