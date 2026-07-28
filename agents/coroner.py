@@ -182,7 +182,7 @@ def diagnose(project_display, v, ev):
     """Pipeshift writes cause, recommendation, alternative."""
     lines = [
         f"[{e['provider']}] {e['timestamp']} {e.get('author') or ''}: {e['text']}"
-        for e in ev[:12]
+        for e in ev[:8]
     ]
     prompt = DIAGNOSE_PROMPT.format(
         project=project_display, verdict=v["verdict"], reason=v["reason"],
@@ -190,7 +190,7 @@ def diagnose(project_display, v, ev):
     )
     # Reasoning model: it spends tokens thinking before it writes. Starve it and
     # content comes back empty with a 200. Give it real headroom.
-    raw = chat(prompt, max_tokens=1500, temperature=0.4)
+    raw = chat(prompt, max_tokens=3000, temperature=0.3)
     start, end = raw.find("{"), raw.rfind("}")
     if start == -1 or end == -1:
         return {"cause": "undetermined", "survived_by": "unknown",
