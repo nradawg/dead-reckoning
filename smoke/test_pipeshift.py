@@ -11,8 +11,7 @@ API_KEY = os.environ.get("PIPESHIFT_API_KEY")
 if not API_KEY:
     sys.exit("FAIL: no PIPESHIFT_API_KEY in .env")
 
-# Model must be one the key has access to — check the Pipeshift dashboard.
-MODEL = os.environ.get("PIPESHIFT_MODEL", "meta-llama/Meta-Llama-3-8B-Instruct")
+MODEL = os.environ.get("PIPESHIFT_MODEL", "deepseek-ai/DeepSeek-V4-Flash")
 
 client = OpenAI(api_key=API_KEY, base_url="https://api.pipeshift.com/api/v0/")
 chat = client.chat.completions.create(

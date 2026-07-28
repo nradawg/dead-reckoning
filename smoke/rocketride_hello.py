@@ -10,13 +10,12 @@ from dotenv import load_dotenv
 
 load_dotenv(os.path.join(os.path.dirname(__file__), "..", ".env"))
 
-os.environ.setdefault("ROCKETRIDE_URI", "https://api.rocketride.ai")
-auth = os.environ.get("ROCKETRIDE_AUTH") or os.environ.get("ROCKETRIDE_API_KEY")
-if not auth:
+URI = os.environ.get("ROCKETRIDE_URI", "https://api.rocketride.ai")
+AUTH = os.environ.get("ROCKETRIDE_AUTH") or os.environ.get("ROCKETRIDE_APIKEY")
+if not AUTH:
     sys.exit("FAIL: no ROCKETRIDE_AUTH in .env (generate token at cloud.rocketride.ai)")
-os.environ["ROCKETRIDE_AUTH"] = auth
 
-from rocketride import RocketRideClient  # noqa: E402  (needs env set first)
+from rocketride import RocketRideClient  # noqa: E402
 
 PIPELINE = {
     "components": [
@@ -37,7 +36,7 @@ PIPELINE = {
 
 
 async def main():
-    async with RocketRideClient() as client:
+    async with RocketRideClient(uri=URI, auth=AUTH) as client:
         result = await client.use(pipeline=PIPELINE)
         token = result["token"]
         out = await client.send(
