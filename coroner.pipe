@@ -10,7 +10,7 @@
    "id": "coroner_llm",
    "provider": "llm_openai",
    "config": {
-     "apikey": "psai_6PgFjeDWYYm9GuT_OeGNELVnZDaDE52aHhCaPobpvbMjhsh2",
+     "apikey": "${PIPESHIFT_API_KEY}",
      "model": "deepseek-ai/DeepSeek-V4-Flash",
      "baseUrl": "https://api.pipeshift.com/api/v0",
      "system": "You are the Coroner, a medical examiner for software projects. Given an evidence dossier from Slack, GitHub, Linear and Gmail, return ONLY JSON with keys cause, survived_by, recommendation (REVIVE|REPLACE|BURY), reasoning, eulogy."
